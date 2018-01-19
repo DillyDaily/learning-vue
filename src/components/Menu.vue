@@ -1,4 +1,6 @@
 <template>
+
+<!-- Select Menu Items -->
   <div class="row">
       <div class="col-sm-12 col-md-6">
           <table class="table table-hover">
@@ -9,10 +11,12 @@
                     <th>Add to Cart</th>
                   </tr>
               </thead>
+
               <tbody v-for="item in getMenuItems">
                   <tr>
                     <td><strong>{{ item.name }}</strong></td>
                   </tr>
+                  
                   <tr v-for="option in item.options">
                       <td>{{ option.size }}</td>
                       <td>{{ option.price }}</td>
@@ -23,7 +27,41 @@
               </tbody>
           </table>
       </div>
-      {{ cart }}
+
+      <!-- Shopping Cart -->
+     <div class="col-sm-12 col-md-6">
+         <div v-if="cart.length > 0">
+          <table class="table table-hover">
+              <thead class="thead-default">
+                  <tr>
+                    <th>Quantity</th>
+                    <th>Item</th>
+                    <th>Total</th>
+                  </tr>
+              </thead>
+            
+              <tbody v-for="item in cart">
+                  <tr>
+                   <td><button  class="btn btn-sm" 
+                                type="button"
+                                @click="decreaseQuantity(item)">-</button>
+                   <span>{{ item.quantity }}</span>
+                   <button  class="btn btn-sm" 
+                            type="button"
+                            @click="increaseQuantity(item)">+</button>
+                   </td>
+                   <td>{{ item.name }} {{ item.size }}</td>
+                   <td>{{ item.price * item.quantity }}</td>
+                  </tr>
+              </tbody>
+          </table>
+        <p>Order TOTAL: </p>
+        <button class="btn btn-success btn-block">Place Order</button>
+        </div>
+        <div v-else>
+            <p>{{ cartText }}</p>
+        </div>
+     </div>
   </div>
 </template>
 
@@ -32,6 +70,7 @@
         data() {
             return {
                 cart: [],
+                cartText: 'Your cart is empty',
                 getMenuItems: {
                     1: {
                         'name': 'Margherita',
@@ -78,6 +117,19 @@
                     size: option.size,
                     quantity: 1
                 })
+            },
+            increaseQuantity(item) {
+                item.quantity++;
+            },
+            decreaseQuantity(item) {
+                item.quantity--;
+
+                if(item.quantity === 0) {
+                    this.removeFromCart(item);
+                }
+            },
+            removeFromCart(item) {
+                this.cart.splice(this.cart.indexOf(item), 1);
             }
         }
     }

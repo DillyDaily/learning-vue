@@ -4,7 +4,7 @@
       <life-header></life-header>
     </div>
     <div class="container">
-      <life-menu></life-menu>
+      <life-admin></life-admin>
     </div>
     <div class="container">
       <life-footer></life-footer>
@@ -17,13 +17,15 @@ import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Home from './components/Home.vue'
 import Menu from './components/Menu.vue'
+import Admin from './components/Admin.vue'
 
 export default {
   components: {
     lifeHeader: Header,
     lifeFooter: Footer,
     lifeHome: Home,
-    lifeMenu: Menu
+    lifeMenu: Menu,
+    lifeAdmin: Admin,
   }
 }
 </script>
